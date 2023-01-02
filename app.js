@@ -87,6 +87,27 @@ app.route("/articles/:articleName")
         if (!err) res.send("Successfully updated the article!");
       }
     );
+  })
+
+  .patch(function(req, res) {
+    Article.findOneAndUpdate({
+      title: req.params.articleName
+    }, {
+      $set: req.body
+    }, function(err) {
+      if (!err) {
+        res.send("Update Successful");
+      } else {
+        res.send(err);
+      }
+    });
+  })
+
+  .delete(function(req,res){
+    Article.findOneAndDelete({title:req.params.articleName},function(err){
+      if(!err) res.send("Deleted Successfully");
+      else res.send(err);
+    });
   });
 
 app.listen(3000, function() {
